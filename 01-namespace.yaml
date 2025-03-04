@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: expense
+
+# "kubectl create -f 01-namespace.yaml" ==> if resource already(Namespace in this case) exists,"create" gives error.
+# or
+# "kubectl apply -f 01-namespace.yaml" ==> if resource already exists, "apply" doesnt give error.
+
+#  "kubectl create namespace <name-of-namespace>" ==> command to create Namespace without yaml file.
