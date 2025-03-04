@@ -10,3 +10,7 @@ spec:
   - name: container2
     image: almalinux:9
     command: ["sleep","1000"]
+
+
+    # how to swith between containers within pod,
+    # "kubectl exec -it <pod-name> -c <conatiner-name> -- bash"
