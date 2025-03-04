@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: podname
   namespace: expense
+  #if we doesn't specify namespace, resource(pod in this case) will be created in default namespace
 spec:
   containers:
   - name: container1
