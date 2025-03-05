@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: requests-limits-demo
+spec:
+  containers:
+  - name: container1
+    image: nginx
+    resources:
+      requests: # requests-->minimum allocation of resource.
+        memory: "64Mi" # 1Mi(Mebibyte)=1.04Mb(Megabyte). memory-->RAM
+        cpu: "250m"  # 250m --> 25% of a CPU core
+      limits: # limits-->maximum allocation of resource.
+        memory: "128Mi"
+        cpu: "500m"
