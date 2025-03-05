@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: env-demo
+spec:
+  containers:
+  - name: env-demo-container
+    image: nginx
+    # this env is applied while running container, and env in docker is while building image
+    env:
+    - name: email
+      value: "chan@gmail.com"
+    - name: password
+      value: "chan1234"
