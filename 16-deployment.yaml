@@ -48,3 +48,13 @@ spec:
       targetPort: 80
       nodePort: 30007   
 
+# "kubectl rollout history deployment/<deployment-name>" 
+    # this gives revision numbers, the highest is current running version/revision.
+
+# "kubectl rollout history deployment/<deployment-name> --revision=<revision-number>"
+   # gives more details about that particular revision(eg: which image is used ..etc)
+
+# "kubectl rollout undo deployment/<deployment-name>" --> rollback to previous version/revision
+
+# "kubectl rollout undo deployment/<deployment-name> --to-revision=<revision-number>" 
+        # rollback to given version/revision
