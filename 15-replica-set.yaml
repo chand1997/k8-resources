@@ -29,5 +29,8 @@ spec:
 #The only purpose of ReplicaSet is to make 3 replicas available all the time(even if we delete, it creates
 #  automatically)
 
-# If there is any update(new image), it cannot detect and cannot update the pods.
+# If there is any update(new image), from nginx to nginx:stable-perl and we re-run command 
+#     "kubectl apply -f 15-replica-set.yaml"
+# it cannot detect changes and update the pods.
+
 # In order to do that, we use "Deployment" object
