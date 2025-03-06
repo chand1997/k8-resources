@@ -21,11 +21,28 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:stable-perl
+        image: chadcoderchandan/nginx:v1
 
   # Pod is subset of ReplicaSet, ReplicaSet is subset of Deployment.
 
   # if we create "Deployment", it will automatically create "ReplicaSet",then ReplicaSet will create rquired pods.
 
   # And if there is any change in image, "Deployment" will automatically creates new pods and destroys old pods.
+
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-demo
+spec:
+  type: LoadBalancer  
+  selector:
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 80
+      nodePort: 30007   
 
