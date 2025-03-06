@@ -1,3 +1,7 @@
+ # "eksctl create cluster --config-file=eks.yaml" ==> create cluster
+
+  # "eksctl delete cluster --config-file=eks.yaml" ==> delete cluster
+
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
@@ -11,10 +15,17 @@ managedNodeGroups:
   spot: true
   desiredCapacity: 3
 
+#Cloud instances pricing models--> spot,reserved,on-demand
 
+# on-demand --> used for unpredictable workloads, pay-as-you-go model, no long term commitment(so high price).
+  # Eg: A food delivery app runs its servers on on-demand nodes to handle customer orders without downtime.
 
-  # "eksctl create cluster --config-file=eks.yaml" ==> create cluster
+# reserved --> used for predictable workloads, fixed and low cost for long term commitment.
+  # Eg:An online school hosts its learning platform on reserved nodes because students access it daily.
 
-  # "eksctl delete cluster --config-file=eks.yaml" ==> delete cluster
+# spot --> used for non-critical tasks, no fixed resources as above two, so low cost
+  # Eg: A video editing company uses spot nodes to render movies cheaply, even if some jobs get interrupted.
+
+ 
 
 
