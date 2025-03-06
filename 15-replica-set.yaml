@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: demo
+  # labels of replica-set.
+  labels:
+    tier: frontend
+spec:
+  replicas: 3  # number of pods
+  selector:
+  # labels should match with pod and replica-set.
+    matchLabels:
+      tier: frontend
+
+  # below is pod template/definition.
+  template:
+    metadata:
+      labels:
+  # labels of pod.
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+
+# Pod is subset of ReplicaSet
+
+#The only purpose of ReplicaSet is to make 3 replicas available all the time(even if we delete, it creates
+#  automatically)
+
+# If there is any update(new image), it cannot detect and cannot update the pods.
+# In order to do that, we use "Deployment" object
