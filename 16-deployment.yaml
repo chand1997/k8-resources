@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  # labels of deployment.
+  labels:
+    tier: frontend
+spec:
+  replicas: 3  # number of pods
+  selector:
+  # labels of replica-set.
+    matchLabels:
+      tier: frontend
+
+  # below is pod template/definition.
+  template:
+    metadata:
+      labels:
+  # labels of pod.
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+  # Pod is subset of ReplicaSet, ReplicaSet is subset of Deployment.
+
+  # if we create "Deployment", it will automatically create "ReplicaSet",then ReplicaSet will create rquired pods.
+
+  # And if there is any change in image, "Deployment" will automatically creates new pods and destroys old pods.
+
+  
