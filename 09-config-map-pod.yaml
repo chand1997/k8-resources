@@ -8,5 +8,5 @@ spec:
       image: nginx
       envFrom:
         - configMapRef:
-            name: myconfig
+            name: myconfig  # myconfig --> name of "ConfigMap" created in 08-config-map.yaml.
 
