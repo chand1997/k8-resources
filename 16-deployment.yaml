@@ -58,3 +58,7 @@ spec:
 
 # "kubectl rollout undo deployment/<deployment-name> --to-revision=<revision-number>" 
         # rollback to given version/revision
+
+ #"kubectl rollout status deployment <deployment-name>" --> to check whether deployment rolled out or not.
+   # gives o/p-->deployment "<deployment-name>" successfully rolled out
+
