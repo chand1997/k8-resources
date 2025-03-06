@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: nginx:stable-perl
 
   # Pod is subset of ReplicaSet, ReplicaSet is subset of Deployment.
 
@@ -29,4 +29,3 @@ spec:
 
   # And if there is any change in image, "Deployment" will automatically creates new pods and destroys old pods.
 
-  
