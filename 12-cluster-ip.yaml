@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-demo
+spec:
+  type: ClusterIP  # even if we dont mention the type, by default it is ClusterIP. 
+  selector:  # this is how we attach service to every pod, where labels should match and be unique.
+    purpose: clusterip-demo-pod
+  ports:
+    - protocol: TCP
+      port: 80  # service port
+      targetPort: 80 
+       # port on which target app is running. we dont have to give this, if container port is given in pod.
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clusterip-demo-pod
+  labels:
+    purpose: clusterip-demo-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    # - containerPort: 80
