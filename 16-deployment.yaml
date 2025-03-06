@@ -32,7 +32,7 @@ spec:
   # And if there is any change in image, "Deployment" will automatically creates new pods and destroys old pods.
 
 
-
+---
 
 apiVersion: v1
 kind: Service
