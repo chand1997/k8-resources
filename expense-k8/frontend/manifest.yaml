@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: joindevops/frontend:1.2.0
+        image: chadcoderchandan/frontend:v1
         ports:
         - containerPort: 8080
 
