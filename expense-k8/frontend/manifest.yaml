@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend
+  labels:
+    purpose: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      purpose: frontend
+  template:
+    metadata:
+      labels:
+        purpose: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: chadcoderchandan/frontend:v1
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
