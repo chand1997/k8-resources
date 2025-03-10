@@ -6,6 +6,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: ""
+  volumeName: "efs-pv"
   resources:
     requests:
       storage: 5Gi
