@@ -1,3 +1,4 @@
+# Namespace-->Logical separation of k8-resources within the clutser.
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -8,3 +9,7 @@ metadata:
 # "kubectl apply -f 01-namespace.yaml" ==> if resource already exists, "apply" doesnt give error.
 
 #  "kubectl create namespace <name-of-namespace>" ==> command to create Namespace without yaml file.
+
+# "kubectl config set-context --current --namespace=expense"
+  # this command sets expense namespace as default, so that we dont have to give "-n expense" after every kubectl command
+    

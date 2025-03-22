@@ -13,3 +13,6 @@ spec:
       limits: # limits-->maximum allocation of resource.
         memory: "128Mi"
         cpu: "500m"
+
+
+# RAM is for storing active information, and the CPU is for doing the work with that information.

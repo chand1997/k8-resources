@@ -6,3 +6,8 @@ data:
   email: "chan@gmail.com"
   password: "chan$#@!"
   name: "chandan"
+
+# ConfigMap is used to store non-sensitive configuration data in key-value pairs,which can be consumed 
+# by pods to configure application dynamically without modifying the application code.
+
+# Basically configMap helps in separating configuration data from application code.

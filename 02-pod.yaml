@@ -1,3 +1,7 @@
+# A Pod is the smallest unit in Kubernetes that runs one or more containers together, sharing the 
+# same network(ip) and storage. Multiple containers in a Pod help each other, like a web app with a
+# helper container for logging or security.
+
 apiVersion: v1
 kind: Pod
 metadata:

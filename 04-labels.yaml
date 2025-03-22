@@ -11,3 +11,28 @@ spec:
     image: nginx
     ports:
     - containerPort: 80
+
+    # filtering  using key-value
+
+    # kubectl get pods -l app=nginx
+    # or
+    # kubectl get pods -l app=nginx,environment=production
+    # or
+# -----
+    # filtering just by using keys
+
+    # kubectl get pods -l app
+    # or
+    # kubectl get pods -l environment
+# ------
+#  conditional filtering
+  # kubectl get pods -l app!=nginx  --> get pods where app(key) and value should not be nginx
+  # kubectl get pods -l app in (nginx,almalinux) --> get pods where key=app and values can be nginx  or almalinux
+  # kubectl get pods -l app notin (nginx,almalinux) --> get pods where key=app and values should not be nginx  or almalinux
+# ----
+
+# used as selector
+# eg:
+#     selector:
+#       matchLabels:
+#         app: nginx

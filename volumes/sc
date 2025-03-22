@@ -1,0 +1,10 @@
+**Definition** A StorageClass is a Kubernetes resource that defines how storage volumes should be provisioned, specifying the type of storage, provisioning method, and other storage parameters.
+
+**Provisioning** what kind of volumes we are using for dynamic provisioning is defined in "provisioner".
+ SC has type of volume, PVC has the storage required, so k8 creates the volume(in case of ebs) and PV and bound to PVC.
+
+**Reclaim Policy** same as PV(by default retain), but here by default delete
+
+**VolumeBindingMode** Determines how PVs are bound to PVCs. The two options are:
+Immediate: A PV is bound as soon as a PVC is created.
+WaitForFirstConsumer: The PV is only bound when a pod is scheduled that will use the volume.

@@ -4,6 +4,7 @@ metadata:
   name: efs-sc
 provisioner: efs.csi.aws.com
 reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
 parameters:
   provisioningMode: efs-ap
   fileSystemId: fs-03ea463139d11c5bf

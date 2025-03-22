@@ -17,7 +17,10 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: chadcoderchandan/frontend:v2
+        image: chadcoderchandan/frontend:v2 
+        # in the above image we made a change in nginx.conf, default nginx port 80 to 8080 because 
+        # k-8 cannot open ports from 1-1024(only allowed for root users) for non-root users.
+        # but we have given user as non root in image. 
         ports:
         - containerPort: 8080
 
@@ -33,5 +36,7 @@ spec:
     purpose: frontend
   ports:
     - protocol: TCP
-      port: 80
+      port: 80  
+      # why 80 and why not 8080??
+      # so that we dont have to give :8080 after loadbalacer endpoint(like lb-endpoint:8080)  
       targetPort: 8080

@@ -27,7 +27,7 @@ spec:
 
   # Pod is subset of ReplicaSet, ReplicaSet is subset of Deployment.
 
-  # if we create "Deployment", it will automatically create "ReplicaSet",then ReplicaSet will create rquired pods.
+  # if we create "Deployment", it will automatically create "ReplicaSet",then ReplicaSet will create required pods.
 
   # And if there is any change in image, "Deployment" will automatically creates new pods and destroys old pods.
 

@@ -1,3 +1,11 @@
+
+# NodePort: Exposes a service on a specific port on each node, allowing external access to the service.
+#  how to access--> ip:nodePort  (ip--> ip of any worker node in cluster.)
+# allow inbound traffic custom-tcp on sg of eks-cluster on nodePort or range of nodePorts
+
+# how it works?
+# ip:nodePort --> cluster-ip of the service --> pods attached to that service based on selectors.
+
 apiVersion: v1
 kind: Service
 metadata:

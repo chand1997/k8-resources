@@ -1,3 +1,10 @@
+# LoadBalancer: Automatically provisions an external load balancer(based on cloud provider using
+# -->aws in our case) to expose a service to external traffic with load balancing.
+
+# how it works?
+# lb --> ip:nodePort --> cluster-ip of the service --> pods attached to that service based on selectors.
+
+
 apiVersion: v1
 kind: Service
 metadata:

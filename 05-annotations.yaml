@@ -10,3 +10,8 @@ spec:
     image: nginx
     ports:
     - containerPort: 80
+
+
+
+# Annotations are used to store extra information like deployment details or links, not for filtering or
+# selection of resources.

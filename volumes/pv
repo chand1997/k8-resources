@@ -1,0 +1,25 @@
+**Definition** A PersistentVolume (PV) is a piece of storage in a Kubernetes cluster that is provisioned and managed by the administrator or dynamically by Kubernetes.
+
+**Abstraction** PV is an abstraction layer over physical storage, allowing Kubernetes to manage.
+
+**Types of PV** PVs can be backed by different storage types such as EFS,EBS,..etc
+
+**Provisioning** PVs can be created manually (static provisioning) or automatically (dynamic provisioning using StorageClass).
+
+**Capacity** PVs have a fixed capacity(in EBS), scalable capacity(in EFS) and can be requested in terms of size by the user or pod through PersistentVolumeClaims (PVCs).
+
+**Access Modes** PVs support different access modes:
+      ReadWriteOnce (one node can mount it),
+      ReadWriteMany (multiple nodes can mount it),
+      ReadOnlyMany (multiple nodes can mount it as read-only).
+
+**ReclaimPolicy** PVs have a reclaimPolicy to specify what happens when they are released by a PVC. Common policies are:
+   Retain: Keeps the volume after PVC deletion.
+   Recycle: Cleans and reuses the volume.
+   Delete: Deletes the volume when PVC is deleted.
+
+**Binding** A PV is bound to a PVC once the user requests storage, either dynamically or through specific volume names.
+
+**Volume Binding** PVs can be bound to PVCs either immediately or delayed depending on the volumeBindingMode defined in the StorageClass.
+
+**Filesystem** PVs can specify the filesystem type (e.g., ext4, xfs) and mount options when needed, not if we are using efs where filesystem is nfs.

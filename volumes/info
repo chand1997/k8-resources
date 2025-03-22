@@ -1,0 +1,106 @@
+volumes created on docker(docker create volume <volume-name>) is stored in file-system of host server,
+ if that server is crashed data is gone.
+
+thats not the case with kubernetes, it uses external volumes like ebs,efs.
+(Elastic Block storage, Elastic File System)
+
+
+
+ebs-static provisioning:-
+1. create volume in same region as where most worker nodes exist.
+2. install ebs-csi-driver
+
+ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.41"
+
+ The EBS CSI driver in Kubernetes enables both dynamic provisioning of Amazon EBS volumes for persistent storage as well as static provisioning where predefined EBS-backed Persistent Volumes (PVs) are manually created and bound to Persistent Volume Claims (PVCs).
+
+3. EC2 worker nodes should have permission to work with EBS volumes.
+
+  attach "AmazonEBSCSIDriverPolicy" to any of the worker node.
+
+  node(ec2)->security->iamrole->attach policy->AmazonEBSCSIDriverPolicy
+
+---
+Analogy: static-provisioning
+money<-->storage
+
+eg:kid asking money
+
+kid --> mom --> dad --> wallet
+
+pod asking for storage
+
+Pod--> pvc(request should be less or equal to ebs volume created) --> pv --> volume on aws(ebs or efs)
+
+---
+
+
+ebs-dynamic provisioning:-
+
+1. install ebs-csi-driver(same as above)
+
+ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.41"
+
+ 
+2. EC2 worker nodes should have permission to work with EBS volumes.(same as above)
+
+  
+---
+
+dynamic provisioning
+
+eg:kid asking money
+
+kid --> mom --> UPI
+
+pod asking for storage
+
+Pod--> pvc --> StorageClass
+
+storage class give instructions how and where to create volume
+here if the request of pvc is 30 gb that exact capacity storage is created in ebs volume.
+it also creates pv and ebs volume on aws.
+
+---
+
+note--> reclaimPolicy in static provisioning by default is retain.
+        reclaimPolicy in dynamic provisioning by default is delete.
+
+1. EBS should be in same AZ as in EC2, EFS can be anywhere in n/w
+2. EBS is fast compare to EFS
+3. EBS is used for OS , disk and databases, EFS can be used for file storages.
+4. EBS size is fixed. EFS will be scaled automatically.
+5. EFS is based on NFS protocol. 2049 port
+6. EBS and EFS should be mounted to an instance to use.
+7. You can have any filesystem(see fsType in PV) attached to EBS, but EFS use NFS, we can't change.
+
+NFS (Network File System) allows computers to share files over a network as if they were local, commonly used in UNIX and Linux systems.
+
+Port 2049 is the default port used by NFS (Network File System) for communication between clients and servers. It enables the transfer of file requests and data over the network.
+
+note:
+A CSI (Container Storage Interface) driver enables Kubernetes to manage and provision storage resources for containerized applications.
+---
+
+EFS:
+
+1. Install efs-csi driver
+
+   kubectl apply -k \
+   "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/ecr/?ref=release-2.1" 
+
+2. EC2 worker nodes should have permission to work with EFS .
+
+  attach "AmazonEFSCSIDriverPolicy" to any of the worker node.
+
+  node(ec2)->security->iamrole->attach policy->AmazonEFSCSIDriverPolicy
+
+3. create EFS
+4. open port no 2049 on sg of EFS to allow traffic from EC2 worker nodes
+5. create PV or SC(in case of dynamic provisioning), PVC and POD
+---
+note: 
+In both static and dynamic provisioning of efs we have to create efs manually.
+the difference in dynamic is the access points will be created dynamically based on "basePath"
+
+

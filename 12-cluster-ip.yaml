@@ -1,3 +1,21 @@
+# A Service in Kubernetes acts like a DNS (Domain Name System) for a pod or group of Pods, providing a 
+# stable endpoint (IP or DNS name) to access those Pods, since the IP addresses of individual Pods are 
+# short-lived and can change as Pods are created, destroyed, or rescheduled.
+
+# A Service in Kubernetes provides a stable endpoint (IP or DNS) to access pod or pods, enabling 
+# reliable communication and load balancing, even as Pods are dynamically created, destroyed, or
+# rescheduled.
+
+# ClusterIP: Used for internal communication between Pods within the cluster.
+
+# how to access--> exec into any pod and enter "curl <service-name>" 
+# --> this way we can access pod attached to that service.
+
+# or
+
+# exec into any pod and enter "nslookup <service-name>"--> this gives stable ip address of service.
+# and name like -->"<service-name>.<namespace>.svc.cluster.local"
+
 apiVersion: v1
 kind: Service
 metadata:

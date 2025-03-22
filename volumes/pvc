@@ -1,0 +1,11 @@
+**Purpose** PVCs allow users (or pods) to request storage in a Kubernetes cluster.
+
+**Binding to PV** When a PVC is created, k-8 bounds it to PV(volumeName) mentioned in PVC(static provsioning),or PV created by SC(dynamic provisioning)
+
+**Access Modes** same as PV 
+
+**Storage Requirements** In the PVC, you can specify:
+Storage Size: The amount of storage requested, e.g., 5Gi.
+StorageClassName: if its empty i.e static provisioning which includes volumeName and we have to define PV, if its not empty i.e dynamic provisioning without volumeName but we have to define SC which defines PV and creates volume. (but not in efs of our example)
+
+**PVC Lifecycle** The PVC lifecycle is bound to the pod's lifecycle. If the PVC is deleted, it releases the bound PV, and the PV may be cleaned up based on its reclaim policy.
