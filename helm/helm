@@ -1,0 +1,36 @@
+1. helm create <chart-name>
+ it creates a folder like
+
+ my-chart/
+├── .helmignore           # List of files to ignore when packaging the chart (similar to .gitignore)
+├── Chart.yaml            # Metadata about the chart (name, version, description, etc.)
+├── values.yaml           # Default values for the chart (can be overridden during installation)
+├── charts/               # Subcharts (charts within your chart, used for dependencies)
+│   └── <subchart-name>/  # A subchart directory, if the chart has any dependencies
+├── templates/            # Kubernetes manifests/templates that will be rendered
+│   ├── deployment.yaml   # Deployment template (e.g., Deployment, StatefulSet)
+│   ├── service.yaml      # Service template
+│   ├── ingress.yaml      # Ingress template (if any)
+│   └── <other-resources> # Other resource templates like ConfigMap, Secret, etc.
+└── templates/_helpers.tpl  # Helper template functions for reusability in templates
+
+or 
+
+just create folder, in that folder add Chart.yaml,templates(folder) and values.yaml
+
+2. helm install <release-name> <chart-path>
+
+3. helm upgrade <release-name> <chart-path>
+    making any changes in values and then upgrade
+
+4. helm rollback <release-name> <release-number>
+
+5. helm uninstall <release-name> <chart-path>
+
+6. helm list 
+   list all releases.
+
+
+
+
+

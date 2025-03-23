@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-headless
+  namespace: expense
+  labels:
+    app: expense
+spec:
+  clusterIP: None
+  selector:
+    app: expense
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: expense
+  labels:
+    app: expense
+spec:
+  selector:
+    app: expense
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name:  "my-storage-class"
+  namespace: expense
+provisioner: ebs.csi.aws.com
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+--- 
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: expense
+spec:
+  selector:
+    matchLabels:
+      app: expense
+  serviceName: "mysql-headless"
+  replicas: {{ .Values.replicas }}
+  minReadySeconds: 10 
+  template:
+    metadata:
+      namespace: expense
+      labels:
+        app: expense 
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: "chadcoderchandan/mysql:{{ .Values.version}}"
+        volumeMounts:
+        - name: mysql
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      namespace: expense
+      name: mysql
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "my-storage-class"
+      resources:
+        requests:
+          storage: {{ .Values.storage }}
+
+

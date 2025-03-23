@@ -1,3 +1,14 @@
+# Why headless service is required for Statefulset?
+
+# Statefulset is used for statefull applications like db. DB cluster will have multiple instances(i.e 3 pods in statefulset).
+
+# Lets assume a information is added to one instance of db in that cluster, but we have to maintain data uniformity across all the db instances in cluster, how to do it?
+
+# lets say we added some information to instance db-1, db-1 will "nslookup <headless-service-name>" in order to get ip of other instances  and add the information to other db instances too.
+
+# if instance is deleted ip can change thats why stable names for every pod is given,
+# i.e <statefulset-name>-0,1,....etc , in below case web-0,web-1,web-2
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -34,6 +45,9 @@ spec:
   serviceName: "nginx"
   replicas: 3 # by default is 1
   minReadySeconds: 10 # by default is 0
+  # pod definition
+  #  3 pods will be created one at a time, names of pods will be like
+  #  <statefulset-name>-0,1,2 i.e web-0,web-1,web-2
   template:
     metadata:
       labels:
@@ -49,6 +63,10 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
+  # pvc definition
+  # 3 pvc will be created i.e one for each pod
+  # names--> <pvc-template-name>-<statefulset-name>-0,1,2
+  # i.e www-web-0, www-web-1, www-web-2 
   volumeClaimTemplates:
   - metadata:
       name: www

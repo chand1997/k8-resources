@@ -79,7 +79,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: frontend
@@ -98,7 +98,7 @@ spec:
               path: nginx.conf
       containers:
       - name: nginx
-        image: chadcoderchandan/frontend:v2
+        image: "chadcoderchandan/frontend:{{ .Values.version }}"
         resources:
           # soft limit
           requests:
@@ -154,4 +154,4 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 50
+        averageUtilization: {{ .Values.utilization }}

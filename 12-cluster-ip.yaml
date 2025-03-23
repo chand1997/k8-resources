@@ -9,7 +9,7 @@
 # ClusterIP: Used for internal communication between Pods within the cluster.
 
 # how to access--> exec into any pod and enter "curl <service-name>" 
-# --> this way we can access pod attached to that service.
+# --> this way we can access service attached to that pod.
 
 # or
 
