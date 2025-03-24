@@ -18,7 +18,7 @@ spec:
   - name: taint-demo
     image: nginx
   nodeSelector:
-    topology.kubernetes.io/zone: us-east-1c
+    topology.kubernetes.io/zone: us-east-1a
   tolerations:
   - key: "yo"
     operator: "Equal"
@@ -29,4 +29,11 @@ spec:
   # (i.e kubectl taint nodes <node-name-in-az-us-east-1> yo=bro:NoSchedule),
   #  pod will be scheduled only when the tolerations is given in pod definition.
   #  otherwise pod status will be in "Pending"
+
+  # Scheduler doesnt care about tolerations without taint
+
+  # The pod will be scheduled based on node mentioned in nodeSelector only if resources are available
+  # on that particular node, otherwise it will be scheduled on different node.
+  # 
+
   
