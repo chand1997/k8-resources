@@ -8,14 +8,21 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: yoy
+          - key: yo
             operator: NotIn
             values:
             - bro
             - bhai
     #  the above key value is set like
-    #  kubectl label nodes <node-name>    key=value   
+    #  kubectl label nodes <node-name>    key=value  
+
     # we can just use operator "In" for affinity and "NotIn" for anti-affinity 
+
+    # if we are using "In" this means the node should have key with any one of the values.
+
+    # if we are using "NotIn" this means the node should not have key or can have key
+    # but different values other than mentioned values.
+    
   containers:
   - name: node-affinity-demo
     image: nginx
