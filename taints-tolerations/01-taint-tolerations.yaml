@@ -12,7 +12,7 @@ metadata:
 spec:
   containers:
   - name: taint-demo
-     image: nginx
+    image: nginx
   nodeSelector:
     topology.kubernetes.io/zone: us-east-1c
   # tolerations:
