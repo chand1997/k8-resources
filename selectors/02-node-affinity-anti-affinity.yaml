@@ -6,6 +6,18 @@ spec:
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
+
+# requiredDuringSchedulingIgnoredDuringExecution: ensures the pod only schedules on nodes that meet the
+# defined affinity rules (hard requirement). otherwise pending.
+
+# preferredDuringSchedulingIgnoredDuringExecution: allows the pod to be scheduled on nodes that 
+# preferably match the affinity rules but will still be scheduled elsewhere if necessary 
+# (soft preference).
+
+# we use combination of above 2, like we want the pod to be sheduled on node in us-east-1c 
+# zone(required) with label yo=bro(preffered)
+# so we mention key: zone , value as us-east-1c in required and key: yo , value as bro in preffered.
+
         nodeSelectorTerms:
         - matchExpressions:
           - key: yo
@@ -26,8 +38,9 @@ spec:
     # if we are using "NotIn" this means the node should not have key or can have key
     # but different values other than mentioned values.
 
-     # if we are using "Exists" or "DoesNotExist", we just have to give key and operator.
-     # 
+    # if we are using "Exists" or "DoesNotExist", we just have to give key and operator.
+    # Exists--> pod is scheduled on node where label with given key exists otherwise "Pending"
+    # DoesNotExist--> pod is scheduled on node where label with given key not exists otherwise "Pending"
 
 
     
