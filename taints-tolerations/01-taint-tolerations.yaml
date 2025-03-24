@@ -15,9 +15,12 @@ spec:
     image: nginx
   nodeSelector:
     topology.kubernetes.io/zone: us-east-1c
-  # tolerations:
-  # - key: "key1"
-  #   operator: "Equal"
-  #   value: "value1"
-  #   effect: "NoSchedule"
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoSchedule"
+
+  # The only node in the az us-east-1c is tainted, pod is scheduled only when the tolerations is given
+  # in pod definition.
   
