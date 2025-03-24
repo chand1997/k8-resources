@@ -1,0 +1,20 @@
+* When we give "kubectl apply -f file.yaml", the scheduler in eks-control plane decides on which node 
+the pod should be scheduled.
+
+* if we want to decide where the pod should be scheduled, we use some selectors namely,
+nodeSelector, taints & tolerations, nodeAffinity, podAffinity and podAntiAffinity.
+
+
+* NodeSelector is hard rule, i.e the pod is scheduled if and only if there is a worker-node in that
+particular az and it should have resources, otherwise the pod status will be "Pending".
+
+* Assume 2 worker-nodes in az mentioned in nodeSelector, one is tainted(and pod has tolerations) but
+ has no resource, other one is not tainted, in this case pod will be scheduled on untainted node.
+ Tolerations without taint is useless.
+
+* Assume 3 nodes, 2 nodes are tainted with(lets say key=value:NoExecute)and pod also has same 
+tolerations in pod definition and no nodeSelector, but 2 nodes doesnt have resource, then pod will be
+scheduled on 3rd node.
+  again Tolerations without taint is useless.
+
+

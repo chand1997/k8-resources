@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: node-affinity-demo
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: yo
+            operator: In
+            values:
+            - bro
+            - bhai
+    #  the above key value is set like
+    #  kubectl label nodes <node-name>    key=value   
+    # we can just use operator "In" for affinity and "NotIn" for anti-affinity 
+  containers:
+  - name: node-affinity-demo
+    image: nginx
+
