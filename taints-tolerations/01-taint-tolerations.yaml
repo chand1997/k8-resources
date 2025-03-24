@@ -1,0 +1,23 @@
+# kubectl taint nodes <node-name> key=value:NoSchedule
+  #dont schedule pods if taints and tolerations are not matching.
+
+# kubectl taint nodes <node-name> key=value:NoExecute
+ #dont schedule pods if taints and tolerations are not matching and also evict/remove already running 
+ #pods.
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: taint-demo
+spec:
+  containers:
+  - name: taint-demo
+     image: nginx
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1c
+  # tolerations:
+  # - key: "key1"
+  #   operator: "Equal"
+  #   value: "value1"
+  #   effect: "NoSchedule"
+  

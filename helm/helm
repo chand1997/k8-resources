@@ -34,11 +34,17 @@ just create folder, in that folder add Chart.yaml,templates(folder) and values.y
 
 ** how to install any open source software using helm  (eg: prometheus) **
 
+note:- 
+  just search how to create prometheus without using helm just using k8
+  basically we have to write lot of k8-resources.
+  Instead we can add well maintained prometheus using helm, and just override the values.yaml file.
+
 1. helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
 2. helm repo update
 
 3. helm install prometheus prometheus-community/prometheus
+
       prometheus is the release name. You can choose any name for your release.
       prometheus-community/prometheus is the chart name from the prometheus-community repository.
 
