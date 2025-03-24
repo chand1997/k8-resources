@@ -9,12 +9,15 @@ spec:
         nodeSelectorTerms:
         - matchExpressions:
           - key: yo
-            operator: NotIn
+            operator: In
             values:
             - bro
             - bhai
-    #  the above key value is set like
-    #  kubectl label nodes <node-name>    key=value  
+    #  the above key value is set in node like
+    #  kubectl label nodes <node-name> key=value 
+
+    # removing label from node
+    # kubectl label nodes <node-name> key- 
 
     # we can just use operator "In" for affinity and "NotIn" for anti-affinity 
 
@@ -22,6 +25,11 @@ spec:
 
     # if we are using "NotIn" this means the node should not have key or can have key
     # but different values other than mentioned values.
+
+     # if we are using "Exists" or "DoesNotExist", we just have to give key and operator.
+     # 
+
+
     
   containers:
   - name: node-affinity-demo
