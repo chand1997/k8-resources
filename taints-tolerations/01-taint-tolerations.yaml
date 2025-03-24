@@ -1,6 +1,10 @@
 # kubectl taint nodes <node-name> key=value:NoSchedule
   #dont schedule pods if taints and tolerations are not matching.
 
+# kubectl taint nodes <node-name> key=value:NoSchedule-
+  # untaint a node
+
+
 # kubectl taint nodes <node-name> key=value:NoExecute
  #dont schedule pods if taints and tolerations are not matching and also evict/remove already running 
  #pods.
@@ -16,11 +20,13 @@ spec:
   nodeSelector:
     topology.kubernetes.io/zone: us-east-1c
   tolerations:
-  - key: "key1"
+  - key: "yo"
     operator: "Equal"
-    value: "value1"
+    value: "bro"
     effect: "NoSchedule"
 
-  # The only node in the az us-east-1c is tainted, pod is scheduled only when the tolerations is given
-  # in pod definition.
+  # The only node in the az us-east-1c is tainted
+  # (i.e kubectl taint nodes <node-name-in-az-us-east-1> yo=bro:NoSchedule),
+  #  pod will be scheduled only when the tolerations is given in pod definition.
+  #  otherwise pod status will be in "Pending"
   
