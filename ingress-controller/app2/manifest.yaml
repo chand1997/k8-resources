@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+  labels:
+    tier: app2
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      tier: app2
+  template:
+    metadata:
+      labels:
+        tier: app2
+    spec:
+      containers:
+      - name: app2
+        image: chadcoderchandan/app2:v1
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2
+spec:
+  selector:
+    tier: app2
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/group.name: expense
+    # create and give cert arn
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:084828564374:certificate/8b55bd90-3314-441e-889b-100cde0feeac
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "app1.chandev.site"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app2
+            port:
+              number: 80
