@@ -1,0 +1,54 @@
+
+The **Ingress Controller** essentially utilizes an **Application Load Balancer (ALB)** to manage external HTTP(S) traffic. The routing rules for traffic, such as path-based or host-based routing, are defined within **Ingress resource manifest files** in Kubernetes. These manifest files specify how the ALB should route incoming requests to the appropriate services in the cluster based on the defined rules.
+
+Before writing ingress resource in manifest files, we have to intsall AWS ALB Ingress Controller (now called AWS Load Balancer Controller), that's basically a bunch of pods in namespace kube-system.
+
+If those pod requires access to specific AWS resources, it should be assigned a **serviceAccount**. The necessary **IAM role** is associated with that serviceAccount. When the pod tries to access the AWS resources, Kubernetes checks the serviceAccount using **IAM OIDC** to authenticate and authorize the pod. The **serviceAccount** essentially provides temporary access to AWS resources, eliminating the need to store or manage AWS configuration details (like access keys) within the pod. This setup ensures secure and controlled access to AWS resources.
+
+
+**Steps to install AWS Load Balancer Controller**
+
+1. Create an IAM OIDC Provider for your EKS cluster
+
+eksctl utils associate-iam-oidc-provider --region <region> --cluster <cluster-name> --approve
+     
+
+2. Download and Create an IAM policy for the AWS Load Balancer Controller
+
+curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.2.1/docs/install/iam_policy.json
+
+aws iam create-policy --policy-name AWSLoadBalancerControllerPolicy --policy-document file://iam-policy.json
+
+3. Create an IAM role for service accounts 
+
+eksctl create iamserviceaccount \
+  --region <region> \
+  --name alb-ingress-controller \
+  --namespace kube-system \
+  --cluster <cluster-name> \
+  --attach-policy-arn arn:aws:iam::<account-id>:policy/AWSLoadBalancerControllerPolicy \
+  --approve \
+  --override-existing-serviceaccounts
+
+4. Add Helm repo and Install the AWS Load Balancer Controller
+
+helm repo add eks-charts https://aws.github.io/eks-charts
+
+helm repo update
+
+helm install aws-load-balancer-controller eks-charts/aws-load-balancer-controller \
+  --namespace kube-system \
+  --set clusterName=<cluster-name> \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=alb-ingress-controller
+
+5. Verify installation
+
+kubectl get pods -n kube-system
+
+
+
+
+
+
+

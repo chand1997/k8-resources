@@ -1,6 +1,7 @@
 
 # In this we dont have to attach any label to node
 # pod-1 and pod-2 has to be in same node, so the creation of pod-2 is based on labels given in pod-1.
+# Scheduler just chooses the node on which the pod is running with label "app: pod-1" to schedule pod-2.
 apiVersion: v1
 kind: Pod
 metadata:
