@@ -23,9 +23,9 @@ aws iam create-policy --policy-name AWSLoadBalancerControllerPolicy --policy-doc
 
 eksctl create iamserviceaccount \
   --region <region> \
-  --name alb-ingress-controller \
-  --namespace kube-system \
-  --cluster <cluster-name> \
+  --name=aws-load-balancer-controller \
+  --namespace=kube-system \
+  --cluster=<cluster-name> \
   --attach-policy-arn arn:aws:iam::<account-id>:policy/AWSLoadBalancerControllerPolicy \
   --approve \
   --override-existing-serviceaccounts
@@ -40,7 +40,8 @@ helm install aws-load-balancer-controller eks-charts/aws-load-balancer-controlle
   --namespace kube-system \
   --set clusterName=<cluster-name> \
   --set serviceAccount.create=false \
-  --set serviceAccount.name=alb-ingress-controller
+  --set serviceAccount.name=aws-load-balancer-controller
+
 
 5. Verify installation
 
