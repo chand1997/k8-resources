@@ -57,6 +57,8 @@ roleRef:
   name: default-trainee
   apiGroup: rbac.authorization.k8s.io
 
+---
+
 
 
 
