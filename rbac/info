@@ -12,7 +12,7 @@ note: oidc already installed.
 
      mapUsers: |
     - groups:
-      - pod-reader  --> role
+      - default-trainee  --> role
       userarn: arn:aws:iam::084828564374:user/suresh --> user created on aws
       username: suresh --> user created on k8
 
