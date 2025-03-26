@@ -1,6 +1,32 @@
 RBAC (Role-Based Access Control) in Kubernetes is a method of managing access to resources by assigning roles with specific permissions to users or service accounts.
 
-** Steps **
+**Steps**
+note: oidc already installed.
 1. Create policy with eks describe-cluster permission.(aws)
 2. Create user and attach the created policy.(aws)
 3. Create Role and RoleBinding resources in k8.
+4. By using below command, we get aws-auth configmap
+  "kubectl get configmap aws-auth -n kube-system -o yaml"
+
+  copy that into aws-auth.yaml file and add below code
+
+     mapUsers: |
+    - groups:
+      - pod-reader  --> role
+      userarn: arn:aws:iam::084828564374:user/suresh --> user created on aws
+      username: suresh --> user created on k8
+
+   "kubectl apply -f aws-auth.yaml"
+
+   we are basically combining the user of k8 and aws.
+
+5. Create a ec2 server aws configure using credentials of user created on user.
+   Install kubectl on the server.
+   and enter this 
+   "aws eks update-kubeconfig --region us-east-1 --name expense"
+   it basically creates the ./kube folder in which config file exists which is used to authenticate
+   and match user credentials and user on configmap and interact with eks cluster "expense"
+   and then we can access resources as per role.
+
+
+
