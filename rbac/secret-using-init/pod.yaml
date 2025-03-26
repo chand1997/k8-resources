@@ -6,7 +6,7 @@ spec:
   serviceAccount: aws-mysql-secret
   initContainers:
   - name: init-myservice
-    image: busybox:1.28   # image used to run small commands
+    image: amazon/aws-cli # since we are using aws cli commands
     command: ['sh', '-c', " aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env"]
   containers:
   - name: cont-1
