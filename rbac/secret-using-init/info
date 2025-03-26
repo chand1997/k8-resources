@@ -1,0 +1,33 @@
+serviceAccount?? see expalnation in ingress-controller.
+
+
+Here we are trying to access secret from SecretManger(aws) through pod with the help of ServiceAccount.
+
+** Steps **
+
+REGION_CODE=us-east-1 
+CLUSTER_NAME=expense
+ACC_ID=084828564374
+
+1. Create an IAM OIDC Provider for your EKS cluster
+
+  eksctl utils associate-iam-oidc-provider \
+    --region $REGION_CODE \
+    --cluster $CLUSTER_NAME \
+    --approve
+
+2. Create secret in secret-manager(aws) and policy to get that secret, "AWSSecretPolicy"
+
+3. Create ServiceAccount using created policy,
+   this will create service-account and attach role to it using given policy.
+
+eksctl create iamserviceaccount \
+--cluster=$CLUSTER_NAME \
+--namespace=expense \
+--name=aws-mysql-secret \
+--attach-policy-arn=arn:aws:iam::$ACC_ID:policy/AWSSecretPolicy \
+--override-existing-serviceaccounts \
+--region $REGION_CODE \
+--approve
+
+4. Create pod using the ServiceAccount identity

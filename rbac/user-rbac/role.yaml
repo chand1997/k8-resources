@@ -1,3 +1,8 @@
+there are 2 kinds of resources in k8 namespace scoped and cluster scoped
+inorder to give permission to namespace scope resources --> Role, RoleBinding
+inorder to give permission to cluster scope resources --> ClusterRole, ClusterRoleBinding
+
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:

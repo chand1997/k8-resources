@@ -1,4 +1,5 @@
-RBAC (Role-Based Access Control) in Kubernetes is a method of managing access to resources by assigning roles with specific permissions to users or service accounts.
+RBAC (Role-Based Access Control) in Kubernetes is a method of managing access to resources by assigning
+roles with specific permissions to users or service accounts.
 
 **Steps**
 note: oidc already installed.

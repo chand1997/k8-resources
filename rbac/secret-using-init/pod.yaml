@@ -1,25 +1,10 @@
 kind: Pod
 apiVersion: v1
-metadata:
-  name: secret-init-demo
+metadata: 
+  name: secret-demo
   namespace: expense
 spec:
   serviceAccount: aws-mysql-secret
-  initContainers:
-  - name: init-myservice
-    image: amazon/aws-cli # since we are using aws cli commands
-    command: ['sh', '-c', 'aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env']
-    volumeMounts:
-    - mountPath: /secret
-      name: secret-volume
   containers:
-  - name: cont-1
+  - name: secret-demo
     image: nginx
-    volumeMounts:
-    - mountPath: /secret
-      name: secret-volume
-  volumes:
-  - name: secret-volume
-    emptyDir: {}
-
-    # emptyDir is basically a temporary storage of pod(it lives until pod lives).

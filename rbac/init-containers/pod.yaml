@@ -4,10 +4,10 @@ metadata:
   name: init-cont-demo
 spec:
   initContainers:
-  - name: init-myservice
-    image: busybox:1.28   # image used to run small commands
-    command: ['sh', '-c', "until nslookup google.com; do echo waiting for google; sleep 2; done"]
-  # cont-1 starts if and only if "nslookup google.com" is successful, if not it waits for 2 seconds and try nslookup again until its successful
+  - name: init-cont
+    image: busybox:1.28   # busybox:1.28-->image for running commands 
+    command: ['sh', '-c', "until nslookup google.com; do echo waiting for myservice; sleep 2; done"]
+  # unless and untill "nslookup google.com" give response, the main container(below) doesn't run.
   containers:
   - name: cont-1
     image: nginx
