@@ -7,7 +7,10 @@ spec:
   initContainers:
   - name: init-myservice
     image: amazon/aws-cli # since we are using aws cli commands
-    command: ['sh', '-c', " aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env"]
+    command: ['sh', '-c', 'aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env']
+    volumeMounts:
+    - mountPath: /secret
+      name: secret-volume
   containers:
   - name: cont-1
     image: nginx
