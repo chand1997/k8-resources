@@ -11,3 +11,8 @@ spec:
   containers:
   - name: cont-1
     image: nginx
+
+# Usecase
+# 1. Check whether mysql is running(using init container) before creating backend(in main container).
+# 2. fetching secrets.
+# 3. it decreases the load on main container.

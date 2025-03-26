@@ -5,6 +5,21 @@ metadata:
   namespace: expense
 spec:
   serviceAccount: aws-mysql-secret
+  initContainers:
+  - name: aws-cli
+    image: amazon/aws-cli
+    command: ['sh', '-c', "aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env"]
+    volumeMounts:
+    - mountPath: /secret
+      name: secret-volume
   containers:
   - name: secret-demo
     image: nginx
+    volumeMounts:
+    - mountPath: /secret
+      name: secret-volume
+  volumes:
+  - name: secret-volume
+    emptyDir: {}
+
+    # emptyDir is storage of pod (it will be available as long as pod is alive)
