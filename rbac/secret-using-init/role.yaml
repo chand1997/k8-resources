@@ -4,7 +4,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: expense
+  namespace: default
   name: pod-reader
 rules:
 - apiGroups: [""] # "" indicates the core API group
@@ -19,13 +19,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: read-pods
-  namespace: expense
+  namespace: default
 subjects:
 # You can specify more than one "subject"
 subjects:
 - kind: ServiceAccount
   name: aws-mysql-secret
-  namespace: expense
+  namespace: default
 roleRef:
   # "roleRef" specifies the binding to a Role / ClusterRole
   kind: Role #this must be Role or ClusterRole
