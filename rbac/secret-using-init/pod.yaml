@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: secret-init-demo
+spec:
+  serviceAccount: aws-mysql-secret
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28   # image used to run small commands
+    command: ['sh', '-c', " aws secretsmanager get-secret-value --secret-id expense/mysql/secret --query SecretString --output text > /secret/.env"]
+  containers:
+  - name: cont-1
+    image: nginx
+    volumeMounts:
+    - mountPath: /secret
+      name: secret-volume
+  volumes:
+  - name: secret-volume
+    emptyDir: {}
+
+    # emptyDir is basically a temporary storage of pod(it lives until pod lives).
