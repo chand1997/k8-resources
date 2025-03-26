@@ -1,5 +1,5 @@
-we are basically attaching role and role binding to service-account(aws-mysql-reader) to read pods 
-which are in default namespace from pod which is in  expense namespace.
+# we are basically attaching role and role binding to service-account(aws-mysql-reader) to read pods 
+# which are in default namespace from pod which is in  expense namespace.
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
