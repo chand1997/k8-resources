@@ -2,6 +2,7 @@ kind: Pod
 apiVersion: v1
 metadata:
   name: secret-init-demo
+  namespace: expense
 spec:
   serviceAccount: aws-mysql-secret
   initContainers:
