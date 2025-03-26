@@ -8,7 +8,7 @@ data:
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
     - groups:
-      - pod-reader
+      - default-trainee
       userarn: arn:aws:iam::084828564374:user/suresh
       username: suresh
 kind: ConfigMap
