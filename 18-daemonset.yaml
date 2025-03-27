@@ -1,0 +1,53 @@
+# if we want to do some task on every node of cluster or some targeted nodes(using selectors) on the 
+# cluster, we use daemonset
+# tasks including--> logs collection, node health checks, etc
+
+
+
+# below we are basically collecting logs from /var/log from  filesystem of every node, using hostpath
+
+# host path is kind a volume which is used to mount path from node filesystem to particular container
+# in pod
+
+# since we are using hostpath(direct access to node's filesystem we should give readOnly)
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: fluentd-elasticsearch
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
